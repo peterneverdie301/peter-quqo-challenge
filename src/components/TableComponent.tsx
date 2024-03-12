@@ -26,25 +26,47 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
   }, [searchTerm, data])
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 200 },
+    {
+      field: 'images',
+      headerName: 'Image',
+      width: 270,
+      renderCell: params => {
+        const firstImageUrl = params.value?.[0]?.url 
+        return firstImageUrl ? (
+          <img src={firstImageUrl} alt='Product' style={{ width: '30px', height: 'auto' }} />
+        ) : (
+          <span>No image</span>
+        )
+      },
+      // Đảm bảo bạn đang lấy dữ liệu images từ dữ liệu hàng
+      valueGetter: params => params.row.images
+    },
     { field: 'name', headerName: 'Name', width: 150 },
     { field: 'description', headerName: 'Description', width: 200 },
     { field: 'price', headerName: 'Price', width: 130 },
-    { field: 'category_id', headerName: 'Category', width: 180 },
-    { field: 'created_at', headerName: 'Created At ', width: 270 },
-    { field: 'updated_at', headerName: 'Update At ', width: 270 }
+    {
+      field: 'category',
+      headerName: 'Category',
+      width: 180,
+      valueGetter: params => params.row.category.name
+    }
   ]
 
   return (
     <div style={{ height: '100%', width: '100%', background: '#FFFFFF' }}>
       <TextField
+        style={{ margin: '10px', width: '85%' }}
         label='Search by name'
         value={searchTerm}
         onChange={e => setSearchTerm(e.target.value)}
         fullWidth
         margin='normal'
       />
-      <Button onClick={() => setSearchTerm('')} variant='contained' style={{ margin: '10px', background: '#DDDDDD' }}>
+      <Button
+        onClick={() => setSearchTerm('')}
+        variant='contained'
+        style={{ marginTop: '15px', background: '#DDDDDD' }}
+      >
         Clear Search
       </Button>
       {displayData.length > 0 ? (

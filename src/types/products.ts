@@ -10,8 +10,28 @@ export interface Products {
   updated_at: string
   deleted_at: string | null
   children?: Products[]
+  category: Category
+  images: Image[]
 }
 
+interface Image {
+  created_at: string
+  updated_at: string
+  deleted_at: null | string
+  id: number
+  product_id: number
+  caption: string
+  url: string
+}
+
+interface Category {
+  created_at: string
+  updated_at: string
+  deleted_at: null | string
+  id: number
+  parent_id: number
+  name: string
+}
 export interface BaseResponse<T> {
   status: string
   message: string
