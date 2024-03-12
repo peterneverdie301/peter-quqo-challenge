@@ -1,13 +1,15 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { Box, Grid, Typography, Avatar, CircularProgress } from '@mui/material'
+import { Box, Grid, Typography, Avatar, CircularProgress, Divider } from '@mui/material'
 import { useRouter } from 'next/navigation'
 
 // Giả định cấu trúc dữ liệu trả về từ API
 interface Customer {
   id: number
   name: string
-  avatar: string // Giả định rằng dữ liệu trả về từ API có trường avatar
+  avatar: string
+  address: string
+  username: string
 }
 
 const UserProfile: React.FC = () => {
@@ -58,6 +60,12 @@ const UserProfile: React.FC = () => {
             <Avatar src={customer.avatar} sx={{ width: 56, height: 56, margin: 'auto' }} />
             <Typography variant='h6' sx={{ mt: 2 }}>
               {customer.name}
+            </Typography>
+            <Typography variant='h6' sx={{ mt: 2 }}>
+              {customer.username}
+            </Typography>
+            <Typography variant='h6' sx={{ mt: 2 }}>
+              {customer.address}
             </Typography>
           </Box>
         ) : (

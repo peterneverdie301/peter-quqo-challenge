@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Products } from '@/types/products' // Giả định đường dẫn này đúng
+import { Products } from '@/types/products'
 import { Button, TextField } from '@mui/material'
 
 interface TableProps {
@@ -31,7 +31,7 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
       headerName: 'Image',
       width: 270,
       renderCell: params => {
-        const firstImageUrl = params.value?.[0]?.url 
+        const firstImageUrl = params.value?.[0]?.url
         return firstImageUrl ? (
           <img src={firstImageUrl} alt='Product' style={{ width: '30px', height: 'auto' }} />
         ) : (
@@ -41,8 +41,8 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
       // Đảm bảo bạn đang lấy dữ liệu images từ dữ liệu hàng
       valueGetter: params => params.row.images
     },
-    { field: 'name', headerName: 'Name', width: 150 },
-    { field: 'description', headerName: 'Description', width: 200 },
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'description', headerName: 'Description', width: 400 },
     { field: 'price', headerName: 'Price', width: 130 },
     {
       field: 'category',
