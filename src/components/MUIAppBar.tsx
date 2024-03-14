@@ -23,7 +23,7 @@ import Link from 'next/link'
 
 const pageLinks = {
   Products: '/home',
-  Customer: '/customer', // Giả sử đây là đường dẫn mặc định cho Customer, thay đổi nếu cần
+  Catalogue: '/customer',
   Cart: '/place-order'
 }
 
@@ -164,6 +164,22 @@ function ResponsiveAppBar() {
             // settings={initialSettings}
             toggleNavVisibility={() => {}}
             saveSettings={values => {}}
+            settings={{
+              skin: 'default',
+              mode: 'dark',
+              appBar: undefined,
+              footer: undefined,
+              navHidden: undefined,
+              appBarBlur: false,
+              direction: 'ltr',
+              navCollapsed: false,
+              themeColor: 'primary',
+              contentWidth: 'full',
+              layout: undefined,
+              lastLayout: undefined,
+              verticalNavToggleType: 'collapse',
+              toastPosition: undefined
+            }}
           />
 
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', position: 'sticky', top: 0, right: 0, m: 2 }}>

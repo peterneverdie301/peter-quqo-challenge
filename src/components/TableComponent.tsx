@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import { Products } from '@/types/products'
-import { Button, TextField } from '@mui/material'
+import { Button, Card, CardContent, CardHeader, Grid, TextField } from '@mui/material'
+import CreateProduct from './CreateProduct'
+import { useTranslation } from 'react-i18next'
 
 interface TableProps {
   data: Products[]
 }
 
-// Hàm removeAccents di chuyển ra ngoài component
 const removeAccents = (str: string): string => {
   return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
 
 const TableComponent: React.FC<TableProps> = ({ data }) => {
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [displayData, setDisplayData] = useState<Products[]>([])
 
-  // Tự động cập nhật displayData khi searchTerm hoặc data thay đổi
   useEffect(() => {
     const searchTermNormalized = removeAccents(searchTerm.toLowerCase())
     const filteredData = data.filter(product =>
@@ -38,7 +39,6 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
           <span>No image</span>
         )
       },
-      // Đảm bảo bạn đang lấy dữ liệu images từ dữ liệu hàng
       valueGetter: params => params.row.images
     },
     { field: 'name', headerName: 'Name', width: 200 },
@@ -51,6 +51,8 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
       valueGetter: params => params.row.category.name
     }
   ]
+
+  const refreshParent: () => Promise<void> = async () => {}
 
   return (
     <div style={{ height: '100%', width: '100%', background: '#FFFFFF' }}>
@@ -69,21 +71,28 @@ const TableComponent: React.FC<TableProps> = ({ data }) => {
       >
         Clear Search
       </Button>
-      {displayData.length > 0 ? (
-        <DataGrid
-          rows={displayData}
-          columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { pageSize: 20, page: 0 }
-            }
-          }}
-          checkboxSelection
-          autoHeight
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+      <Grid item xs={12}>
+        <Card>
+          <CardHeader title={t('List Product')} action={<CreateProduct refreshParent={refreshParent} />} />
+          <CardContent>
+            {displayData.length > 0 ? (
+              <DataGrid
+                rows={displayData}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: { pageSize: 20, page: 0 }
+                  }
+                }}
+                checkboxSelection
+                autoHeight
+              />
+            ) : (
+              <p>Loading...</p>
+            )}
+          </CardContent>
+        </Card>
+      </Grid>
     </div>
   )
 }

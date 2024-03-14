@@ -38,3 +38,21 @@ export const fetchUserInfo = async (): Promise<ApiResponse> => {
     throw new Error('Failed to fetch user info')
   }
 }
+
+export const createProduct = async (data: any): Promise<BaseResponse<any>> => {
+  try {
+    const token = localStorage.getItem('jwt')
+
+    const response = await request.post<BaseResponse<any>>('http://localhost:8080/products', {
+      data: data,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    return response
+  } catch (error) {
+    throw new Error('Failed to create product')
+  }
+}
